@@ -2,12 +2,14 @@ import Avatar from "./Avatar";
 import Comment from "./Comment";
 import styles from "./Posts.module.css";
 
-const Posts = () => {
+import PropTypes from "prop-types";
+
+const Posts = (props) => {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/Thiago87dev.png"/>
+          <Avatar src="https://github.com/Thiago87dev.png" />
           <div className={styles.authorInfo}>
             <strong>Thiago Alves</strong>
             <span>Web Developer</span>
@@ -43,12 +45,18 @@ const Posts = () => {
       </form>
 
       <div className={styles.commentList}>
-        <Comment/>
-        <Comment/>
-        <Comment/>
+        <Comment />
+        <Comment />
+        <Comment />
       </div>
     </article>
   );
 };
+
+Posts.propTypes = {
+  author: PropTypes.string,
+  content: PropTypes.string,
+  publishedAt: PropTypes.instanceOf(Date)
+}
 
 export default Posts;
