@@ -3,10 +3,16 @@ import { ThumbsUp, Trash } from "phosphor-react";
 import styles from "./Comment.module.css";
 import Avatar from "./Avatar";
 
-const Comment = ({content}) => {
+const Comment = ({ content, onDeleteComment }) => {
+  
+  function handleDeleteComment() {
+    console.log("deletar");
+    onDeleteComment(content)
+  }
+
   return (
     <div className={styles.comment}>
-      <Avatar withoutBorder={true} src="https://github.com/luizomf.png"/>
+      <Avatar withoutBorder={true} src="https://github.com/luizomf.png" />
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <header>
@@ -16,17 +22,17 @@ const Comment = ({content}) => {
                 Cerca de 2h atrás
               </time>
             </div>
-            <button title="Deletar">
-                <Trash size={24}/>
+            <button onClick={handleDeleteComment} title="Deletar">
+              <Trash size={24} />
             </button>
           </header>
           <p>{content}</p>
         </div>
         <footer>
-            <button>
-                <ThumbsUp />
-                Aplaudir <span>20</span>
-            </button>
+          <button>
+            <ThumbsUp />
+            Aplaudir <span>20</span>
+          </button>
         </footer>
       </div>
     </div>
@@ -35,6 +41,7 @@ const Comment = ({content}) => {
 
 Comment.propTypes = {
   content: PropTypes.string,
+  onDeleteComment: PropTypes.func,
 };
 
 export default Comment;

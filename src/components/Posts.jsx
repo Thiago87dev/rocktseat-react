@@ -36,6 +36,10 @@ const Posts = ({ author, publishedAt, content }) => {
     setNewCommentText(e.target.value);
   }
 
+  function deletecomment(comment) {
+    console.log(`deletando o comentario: ${comment}`);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -55,11 +59,11 @@ const Posts = ({ author, publishedAt, content }) => {
       </header>
 
       <div className={styles.content}>
-        {content.map((line, i) =>
+        {content.map((line) =>
           line.type === "paragraph" ? (
-            <p key={i}>{line.content}</p>
+            <p key={line.content}>{line.content}</p>
           ) : (
-            <p key={i}>
+            <p key={line.content}>
               <a href="#">{line.content}</a>
             </p>
           )
@@ -81,8 +85,8 @@ const Posts = ({ author, publishedAt, content }) => {
       </form>
 
       <div className={styles.commentList}>
-        {comments.map((comment, i) => {
-          return <Comment content={comment} key={i} />;
+        {comments.map((comment) => {
+          return <Comment content={comment} onDeleteComment={deletecomment} key={comment} />;
         })}
       </div>
     </article>
