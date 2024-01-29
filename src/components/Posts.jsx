@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef} from "react";
 import Avatar from "./Avatar";
 import Comment from "./Comment";
 import styles from "./Posts.module.css";
@@ -10,8 +10,8 @@ import PropTypes from "prop-types";
 
 const Posts = ({ author, publishedAt, content }) => {
   const [comments, setComments] = useState(["post muito legal hein."]);
-
   const [newCommentText, setNewCommentText] = useState("");
+  const buttonRef = useRef(null)
 
   const publishedDateFormatted = format(
     publishedAt,
@@ -30,14 +30,20 @@ const Posts = ({ author, publishedAt, content }) => {
     e.preventDefault();
     setComments([...comments, newCommentText]);
     setNewCommentText("");
+    buttonRef.current.blur()
   }
 
   function hendleNewCommentChange(e) {
     setNewCommentText(e.target.value);
   }
 
-  function deletecomment(comment) {
-    console.log(`deletando o comentario: ${comment}`);
+  function deletecomment(commentToDelete) {
+    // const commentWithoutDeletedOne = comments.filter((comment) => {
+    //   return comment !== commentToDelete
+    // })
+    setComments(comments.filter((comment) => {
+      return comment !== commentToDelete
+    }))
   }
 
   return (
@@ -80,13 +86,19 @@ const Posts = ({ author, publishedAt, content }) => {
           placeholder="Deixe um comentario"
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" ref={buttonRef}>Publicar</button>
         </footer>
       </form>
 
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment content={comment} onDeleteComment={deletecomment} key={comment} />;
+          return (
+            <Comment
+              content={comment}
+              onDeleteComment={deletecomment}
+              key={comment}
+            />
+          );
         })}
       </div>
     </article>
