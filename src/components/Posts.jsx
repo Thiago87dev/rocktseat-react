@@ -34,7 +34,13 @@ const Posts = ({ author, publishedAt, content }) => {
   }
 
   function hendleNewCommentChange(e) {
+    e.target.setCustomValidity('')
     setNewCommentText(e.target.value);
+
+  }
+
+  function handleNewCommentInvalid(e){
+    e.target.setCustomValidity('Esse campo é obrigatorio')
   }
 
   function deletecomment(commentToDelete) {
@@ -84,9 +90,11 @@ const Posts = ({ author, publishedAt, content }) => {
           value={newCommentText}
           onChange={hendleNewCommentChange}
           placeholder="Deixe um comentario"
+          onInvalid={handleNewCommentInvalid}
+          required
         />
         <footer>
-          <button type="submit" ref={buttonRef}>Publicar</button>
+          <button type="submit" disabled={newCommentText.length === 0} ref={buttonRef}>Publicar</button>
         </footer>
       </form>
 
